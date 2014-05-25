@@ -257,7 +257,11 @@
           }
           disqusDeveloper = __indexOf.call(this.getEnvironments(), 'production') >= 0 ? '0' : '1';
           pageUrl = this.getPageUrl();
-          disqusIdentifier = this.document.disqusIdentifier || this.document.slug;
+          if (this.document.disqusIdentifier !== void 0) {
+            disqusIdentifier = this.document.disqusIdentifier;
+          } else {
+            disqusIdentifier = this.document.slug;
+          }
           disqusTitle = this.document.title || this.document.name;
           return "<div id=\"disqus_thread\"></div>\n<script>\n	(function(){\n		window.disqus_shortname = '" + disqusShortname + "';\n		window.disqus_developer = '" + disqusDeveloper + "';\n		window.disqus_url = '" + pageUrl + "';\n		window.disqus_identifier = '" + disqusIdentifier + "';\n		window.disqus_title = '" + disqusTitle + "';\n		if ( window.DISQUS ) {\n			return DISQUS.reset({\n				reload: true,\n				config: function () {\n					this.page.identifier = window.disqus_identifier;\n					this.page.url = window.disqus_url;\n					this.page.title = window.disqus_title;\n				}\n			});\n		}\n		else {\n		  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;\n		  dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';\n		  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);\n		}\n	})();\n</script>\n<noscript>Please enable JavaScript to view the <a href=\"http://disqus.com/?ref_noscript\">comments powered by Disqus.</a></noscript>\n<a href=\"http://disqus.com\" class=\"dsq-brlink\">comments powered by <span class=\"logo-disqus\">Disqus</span></a>";
         },
